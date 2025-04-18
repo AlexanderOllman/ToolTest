@@ -1,0 +1,1 @@
+module.exports = { content: ["./renderer/src/**/*.{ts,tsx}"], theme: { extend: {} }, plugins: [] }; 
