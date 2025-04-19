@@ -1,4 +1,4 @@
-from fast_agent import FastAgent, orchestrator
+from fast_agent_mcp import FastAgent, orchestrator
 from planner_agent import plan
 import faiss, json, numpy as np, subprocess, socketio, asyncio
 from config import get_config

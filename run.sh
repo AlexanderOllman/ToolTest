@@ -39,7 +39,13 @@ if ! command_exists tesseract; then
     brew install tesseract
 fi
 
-# 6. Clone the Agent Framework repository if not already present
+# 6. Install uv package manager if not installed
+if ! command_exists uv; then
+    echo "📦 uv not found. Installing uv..."
+    pip3 install uv
+fi
+
+# 7. Clone the Agent Framework repository if not already present
 if [ ! -d "agent_framework" ]; then
     echo "📁 Cloning Agent Framework repository..."
     git clone https://github.com/AlexanderOllman/ToolTest.git
@@ -47,7 +53,7 @@ fi
 
 cd agent_framework
 
-# 7. Set up Python virtual environment
+# 8. Set up Python virtual environment
 if [ ! -d "venv" ]; then
     echo "🐍 Setting up Python virtual environment..."
     python3 -m venv venv
@@ -55,34 +61,38 @@ fi
 
 source venv/bin/activate
 
-# 8. Install Python dependencies
+# 9. Install Python dependencies
 echo "📦 Installing Python dependencies..."
 pip3 install --upgrade pip
 pip3 install -r requirements.txt
 
-# 9. Install MCPO server if not installed
+# 10. Install fast-agent-mcp
+echo "⚙️ Installing fast-agent-mcp..."
+uv pip install fast-agent-mcp
+
+# 11. Install MCPO server if not installed
 if ! command_exists mcpo; then
     echo "🧠 MCPO server not found. Installing MCPO server..."
     pip3 install mcpo
 fi
 
-# 10. Start MCPO server
+# 12. Start MCPO server
 echo "🚀 Starting MCPO server..."
 mcpo run mcpo.json &
 
-# 11. Start GUI agent
+# 13. Start GUI agent
 echo "🖥️ Starting GUI agent..."
 python servers/gui_agent/server.py &
 
-# 12. Start OAuth service
+# 14. Start OAuth service
 echo "🔐 Starting OAuth service..."
 uvicorn oauth_service:app --port 9300 &
 
-# 13. Start Task Executor
+# 15. Start Task Executor
 echo "⚙️ Starting Task Executor..."
 uvicorn task_executor:app --port 8001 &
 
-# 14. Set up and start the front-end
+# 16. Set up and start the front-end
 cd ui
 
 echo "📦 Installing Node.js dependencies..."

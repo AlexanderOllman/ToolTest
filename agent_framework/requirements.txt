@@ -6,11 +6,10 @@ pynacl
 argon2-cffi
 faiss-cpu
 voyageai
-fastmcp
 openai
-fast-agent
 rich
 gitpython
 httpx
 pydantic
-python-dotenv 
+python-dotenv
+fast-agent-mcp
